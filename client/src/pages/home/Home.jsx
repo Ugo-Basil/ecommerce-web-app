@@ -3,9 +3,9 @@ import styled from "styled-components";
 import Navbar from "../../components/navbar/Navbar";
 import banner from "../../assets/banner.jpg";
 import mobileBanner from "../../assets/mobile_banner.jpg";
-import Card from "../../components/card/Card";
 
-const Home = () => {
+
+const Home = ({basket, setBasket}) => {
   return (
     <Container>
       <Navbar />
@@ -14,14 +14,10 @@ const Home = () => {
         <img src={mobileBanner} alt="" />
       </Banner>
       <Main>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+        {/* <Card basket={basket} setBasket={setBasket} />
+        <Card basket={basket} setBasket={setBasket} />
+        <Card basket={basket} setBasket={setBasket} />
+        <Card basket={basket} setBasket={setBasket} /> */}
       </Main>
     </Container>
   );
