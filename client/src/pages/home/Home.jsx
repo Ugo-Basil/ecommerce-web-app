@@ -1,11 +1,25 @@
-import React from "react";
+import axios from "../../axios";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Navbar from "../../components/navbar/Navbar";
 import banner from "../../assets/banner.jpg";
 import mobileBanner from "../../assets/mobile_banner.jpg";
+import Card from '../../components/card/Card';
 
 
-const Home = ({basket, setBasket}) => {
+
+const Home = () => {
+  const [products, setProducts] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await axios.get('/products/get');
+      setProducts(data);
+    };
+    fetchData();
+  }, []);
+
+
   return (
     <Container>
       <Navbar />
@@ -14,10 +28,16 @@ const Home = ({basket, setBasket}) => {
         <img src={mobileBanner} alt="" />
       </Banner>
       <Main>
-        {/* <Card basket={basket} setBasket={setBasket} />
-        <Card basket={basket} setBasket={setBasket} />
-        <Card basket={basket} setBasket={setBasket} />
-        <Card basket={basket} setBasket={setBasket} /> */}
+        {products &&
+          products?.data.map((product) => (
+            <Card
+              id={product._id}
+              image={product.imageURL}
+              price={product.price}
+              rating={product.rating}
+              title={product.title}
+            />
+          ))}
       </Main>
     </Container>
   );
@@ -26,6 +46,9 @@ const Home = ({basket, setBasket}) => {
 const Container = styled.div`
   width: 100%;
   background-color: rgb(234, 237, 247);
+  max-width: 1500px;
+  margin: auto;
+  height: fit-content;
 `;
 
 const Banner = styled.div`
