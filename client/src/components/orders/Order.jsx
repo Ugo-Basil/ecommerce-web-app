@@ -11,7 +11,7 @@ const Order = () => {
     axios
       .post("/orders/get", { email: user.email })
       .then((res) => setOrders(res.data));
-  }, []);
+  }, [user]);
   console.log(orders);
   return (
     <Container>
