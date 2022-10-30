@@ -3,7 +3,25 @@ import styled from "styled-components";
 import amazonImg from "../../assets/amazon_logo1.png";
 import searchIcon from "../../assets/searchIcon.png";
 import basketIcon from "../../assets/basket-icon.png";
+import { useNavigate } from "react-router-dom";
+import { useStateValue } from "../../StateProvider";
+
 const Navbar = () => {
+
+  const [{ basket, user }, dispatch] = useStateValue();
+  
+  const navigate = useNavigate();
+
+  const signOut = () => {
+    dispatch({
+      type: 'SET_USER',
+      user: null,
+    });
+
+    localStorage.removeItem('user');
+    navigate('/')
+  }
+
   return (
     <Container>
       <Inner>
@@ -12,30 +30,30 @@ const Navbar = () => {
         </Logo>
         <SearchBar>
           <input type="text" placeholder="Search..." />
-          <SearchIcon>
+          <SearchIcon onClick={()=> navigate('/addproduct')}>
             <img src={searchIcon} alt="" />
           </SearchIcon>
         </SearchBar>
         <RightContainer>
-          <NavButton>
+          <NavButton  onClick={user ? () => signOut() : ()=> navigate('/signin')}>
             <p>Hello,</p>
-            <p>Guest</p>
+            <p>{user ? user?.fullName : 'Guest' }</p>
           </NavButton>
 
           <NavButton>
             <p>Return,</p>
             <p>& Orders</p>
           </NavButton>
-          <BasketButton>
-            <img src={basketIcon} alt="basket-icon"></img>
-            <p>0</p>
+          <BasketButton onClick={()=> navigate('/checkout')}>
+            <img src={basketIcon} alt="basket-icon"/>
+            <p>{basket?.length}</p>
           </BasketButton>
         </RightContainer>
       </Inner>
 
       <MobileSearchbar>
         <input type="text" placeholder="Search..." />
-        <SearchIcon>
+        <SearchIcon onClick={() => navigate('/addproduct')}>
           <img src={searchIcon} alt="" />
         </SearchIcon>
       </MobileSearchbar>

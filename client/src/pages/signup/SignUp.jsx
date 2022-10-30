@@ -1,7 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import image from "../../assets/amazon_logo.png";
-const Register = () => {
+import { useNavigate } from "react-router-dom";
+import axios from "../../axios";
+const SignUp = () => {
+  const navigate = useNavigate();
+
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const signup = (e) => {
+    e.preventDefault();
+    axios.post('/auth/signup', { email, password, fullName })
+      .then((res) => console.log(res.data.message))
+      .catch((err) => console.error(err))
+    navigate('/login');
+  }
+
+
   return (
     <Container>
       <Logo>
@@ -12,17 +30,32 @@ const Register = () => {
         <h3>Sign-Up</h3>
         <InputContainer>
           <p>Name</p>
-          <input type="email" placeholder="Full Name" />
+          <input
+            type="email"
+            placeholder="Full Name"
+            onChange={(e) => setFullName(e.target.value)}
+            value={fullName}
+          />
         </InputContainer>
         <InputContainer>
           <p>Email</p>
-          <input type="email" placeholder="youremail@example.com" />
+          <input
+            type="email"
+            placeholder="youremail@example.com"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
         </InputContainer>
         <InputContainer>
           <p>Password</p>
-          <input type="password" placeholder="Password" />
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
         </InputContainer>
-        <LoginButton >Create Amazon Account</LoginButton>
+        <SignUpButton onClick={signup}>Create Amazon Account</SignUpButton>
         <InfoText>
           <p>
             By continuing you agree to Amazon's <span>Conditions of Use </span>
@@ -30,7 +63,9 @@ const Register = () => {
           </p>
         </InfoText>
       </FormContainer>
-      <SignUpButton>Back to Login</SignUpButton>
+      <SignInButton onClick={() => navigate("/login")}>
+        Back to Login
+      </SignInButton>
     </Container>
   );
 };
@@ -99,7 +134,7 @@ const InputContainer = styled.div`
   }
 `;
 
-const LoginButton = styled.button`
+const SignUpButton = styled.button`
   width: 70%;
   height: 35px;
   border: none;
@@ -127,7 +162,7 @@ const InfoText = styled.p`
   }
 `;
 
-const SignUpButton = styled.button`
+const SignInButton = styled.button`
   width: 300px;
   height: 35px;
   background-color: #f3b414;
@@ -143,4 +178,4 @@ const SignUpButton = styled.button`
   }
 `;
 
-export default Register;
+export default SignUp;

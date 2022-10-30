@@ -1,7 +1,37 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+import axios from '../../axios'
 import image from '../../assets/amazon_logo.png'
-const Login = () => {
+import { useStateValue } from '../../StateProvider'
+
+const SignIn = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // eslint-disable-next-line
+  const [{ }, dispatch] = useStateValue();
+
+  const login = (e) => {
+    e.preventDefault();
+
+    axios.post('/auth/login', { email, password })
+      .then((res) => {
+        if (!res.data.error) {
+          dispatch({
+            type: 'SET_USER',
+            user: res.data,
+          });
+
+          localStorage.setItem('user', JSON.stringify(res.data));
+
+          navigate('/');
+        } else if (res.data.error) {
+          console.error(res.data.error);
+      }
+    })
+  }
+
   return (
     <Container>
       <Logo>
@@ -12,13 +42,13 @@ const Login = () => {
         <h3>Sign-In</h3>
         <InputContainer>
           <p>Email</p>
-          <input type="email" placeholder="youremail@example.com" />
+          <input type="email" placeholder="youremail@example.com" onChange={(e) => setEmail(e.target.value)} value={email} />
         </InputContainer>
         <InputContainer>
           <p>Password</p>
-          <input type="password" placeholder="Password" />
+          <input type="password" placeholder="Password" onChange={(e)=> setPassword(e.target.value)} value={password} />
         </InputContainer>
-        <LoginButton>login</LoginButton>
+        <LoginButton onClick={login}>login</LoginButton>
         <InfoText>
           <p>
             By continuing you agree to Amazon's <span>Conditions of Use </span>
@@ -26,7 +56,7 @@ const Login = () => {
           </p>
         </InfoText>
       </FormContainer>
-      <SignUpButton>
+      <SignUpButton  onClick={()=> navigate('/signup')}>
         Create your Amazon Account
       </SignUpButton>
     </Container>
@@ -143,4 +173,4 @@ const SignUpButton = styled.button`
 
 
 
-export default Login
+export default SignIn

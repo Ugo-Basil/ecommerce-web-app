@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { useStateValue } from "../../StateProvider";
 import Navbar from "../navbar/Navbar";
 
+
 const Address = () => {
-    const [{ }, dispatch] = useStateValue();
+    // eslint-disable-next-line
+    const [{}, dispatch] = useStateValue();
     const [fullName, setFullName] = useState('');
     const [phone, setPhone] = useState('');
     const [flat, setFlat] = useState('');

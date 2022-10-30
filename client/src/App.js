@@ -1,10 +1,12 @@
 
 import { Routes, Route} from "react-router-dom";
 import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
+import SignIn from "./pages/signin/SignIn";
+import SignUp from "./pages/signup/SignUp";
 import styled from 'styled-components'
 import AddProduct from "./components/addProduct/AddProduct";
+import Address from "./components/address/Address";
+import Checkout from "./components/checkout/Checkout";
 
 function App() {
 
@@ -12,9 +14,10 @@ function App() {
     <Container>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/address" element={<Address />} />
+        <Route path="/checkout" element={<Checkout/>} />
         <Route path="/addproduct" element={<AddProduct/> }/>
       </Routes>
     </Container>
