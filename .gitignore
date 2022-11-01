@@ -3,8 +3,9 @@
 # dependencies
 api/node_modules
 client/node_modules
+.env
 
-/api/.env
+
 
 /.pnp
 .pnp.js
