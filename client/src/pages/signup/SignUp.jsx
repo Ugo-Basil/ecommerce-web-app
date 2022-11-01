@@ -13,7 +13,7 @@ const SignUp = () => {
 
   const signup = (e) => {
     e.preventDefault();
-    axios.post('/auth/signup', { email, password, fullName })
+    axios.post('/user/auth/signup', { email, password, fullName })
       .then((res) => console.log(res.data.message))
       .catch((err) => console.error(err))
     navigate('/login');

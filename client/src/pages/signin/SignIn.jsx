@@ -15,7 +15,7 @@ const SignIn = () => {
   const login = (e) => {
     e.preventDefault();
 
-    axios.post('/auth/login', { email, password })
+    axios.post('/user/auth/signin', { email, password })
       .then((res) => {
         if (!res.data.error) {
           dispatch({

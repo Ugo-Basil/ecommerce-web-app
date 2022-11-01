@@ -15,12 +15,12 @@ const port = process.env.PORT || 5000;
 // Middlewares
 app.use(express.json());
 
-app.use(cors()); "mongodb+srv://basil:admin@cluster0.m7y6hxi.mongodb.net/?retryWrites=true&w=majority";
+app.use(cors()); 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const url = process.env.MONGO_DB
+// const url = `${process.env.MONGO_DB}`
 
 const connectionParams = {
   useNewUrlParser: true,
@@ -29,7 +29,10 @@ const connectionParams = {
   
 
 mongoose
-  .connect(url, connectionParams)
+  .connect(
+    "mongodb+srv://basil:admin@cluster0.m7y6hxi.mongodb.net/?retryWrites=true&w=majority",
+    connectionParams
+  )
   .then(() => {
     console.log("Connected to the database ");
   })
@@ -40,7 +43,7 @@ mongoose
 app.get('/', (req, res) => res.status(200).send("Home page"));
 app.use("/user", userRouter);
 app.use("/api/products", productRouter);
-app.use("/api", orderRouter);
+app.use("/api/orders", orderRouter);
 app.use("/api", paymentRouter);
 
 
