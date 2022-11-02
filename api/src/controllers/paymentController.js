@@ -1,5 +1,6 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+
 async function payment(req, res) {
     const total = req.body.amount;
     console.log('Payment Request Received!!! for this amount', total);

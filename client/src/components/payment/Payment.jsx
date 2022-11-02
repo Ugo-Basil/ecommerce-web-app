@@ -18,7 +18,7 @@ const Payment = () => {
  const navigate = useNavigate();
  useEffect(() => {
    const fetchClientSecret = async () => {
-     const data = await axios.post("/payment/create", {
+     const data = await axios.post("/api/payment", {
        amount: getBasketTotal(basket),
      });
 
@@ -39,7 +39,7 @@ const Payment = () => {
        },
      })
      .then((result) => {
-       axios.post("/orders/add", {
+       axios.post("/api/orders/add", {
          basket: basket,
          price: getBasketTotal(basket),
          email: user?.email,
@@ -102,7 +102,7 @@ const Payment = () => {
                  <Description>
                    <h4>{product.title}</h4>
 
-                   <p> {product.price}</p>
+                   <p>${product.price}</p>
                  </Description>
                </Product>
              ))}

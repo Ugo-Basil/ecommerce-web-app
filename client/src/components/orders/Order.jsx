@@ -9,7 +9,7 @@ const Order = () => {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     axios
-      .post("/orders/get", { email: user.email })
+      .post("/api/orders/get", { email: user.email })
       .then((res) => setOrders(res.data));
   }, [user]);
   console.log(orders);
@@ -46,7 +46,7 @@ const Order = () => {
                     </Image>
                     <Description>
                       <h4>{product.title}</h4>
-                      <p>{product.price}</p>
+                      <p>${product.price}</p>
                     </Description>
                   </Product>
                 ))}
