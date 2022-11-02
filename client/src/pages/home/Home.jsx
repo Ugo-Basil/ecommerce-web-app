@@ -13,7 +13,8 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await axios.get('/products/get');
+      const data = await axios.get("/api/allproducts/get");
+      console.log(data.data);
       setProducts(data);
     };
     fetchData();
@@ -29,8 +30,9 @@ const Home = () => {
       </Banner>
       <Main>
         {products &&
-          products?.data.map((product) => (
+          products?.data.map((product, index) => (
             <Card
+              key={index}
               id={product._id}
               image={product.imageURL}
               price={product.price}

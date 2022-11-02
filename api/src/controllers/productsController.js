@@ -18,14 +18,15 @@ async function addProduct(req, res){
 }
 
 async function getProducts(req, res) {
-    await Products.find((data, err) => {
-        if (err) {
-            res.status(500).send(err)
-        } else {
-            res.status(200).send(data);
-        }
-    })
+    try {
+        const products = await Products.find();
+        res.status(200).json(products);
+    } catch(err) {
+        res.status(500).json({ message: err.message });
+    }
+       
 }
+    
 
 module.exports = {
     addProduct,

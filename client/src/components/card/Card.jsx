@@ -28,7 +28,7 @@ const Card = ({id, image, title, price, rating}) => {
   return (
     <Container>
       <Image>
-        <img src={image} alt/>
+        <img src={image} alt="item"/>
       </Image>
       <Description>
               <h3>{title}</h3>
@@ -42,7 +42,7 @@ const Card = ({id, image, title, price, rating}) => {
             readOnly
           />
         </Stack>
-              <p>{price}</p>
+              <p>$ {price}</p>
               <button onClick={addToBasket}>Add to Cart</button>
       </Description>
     </Container>
@@ -68,6 +68,7 @@ const Image = styled.div`
   img {
     width: 180px;
     height: 200px;
+    object-fit: contain;
   }
 `;
 const Description = styled.div`

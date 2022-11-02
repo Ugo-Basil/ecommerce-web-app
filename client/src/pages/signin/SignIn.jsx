@@ -12,55 +12,65 @@ const SignIn = () => {
   // eslint-disable-next-line
   const [{ }, dispatch] = useStateValue();
 
-  const login = (e) => {
+  async function login(e) {
     e.preventDefault();
-
-    axios.post('/user/auth/signin', { email, password })
-      .then((res) => {
-        if (!res.data.error) {
-          dispatch({
-            type: 'SET_USER',
-            user: res.data,
-          });
-
-          localStorage.setItem('user', JSON.stringify(res.data));
-
-          navigate('/');
-        } else if (res.data.error) {
-          console.error(res.data.error);
+    try {
+      const res = await axios.post('/api/auth/signin', { email, password });
+      if (!res.data.error) {
+        dispatch({
+          type: 'SET_USER',
+          user: res.data.user
+        })
+        localStorage.setItem("user", JSON.stringify(res.data));
+        navigate('/');
+      } else if (res.data.error) {
+        console.error(res.data.error);
       }
-    })
+    } catch (err) {
+      console.error(err);
+    }
   }
+    return (
+      <Container>
+        <Logo>
+          <img src={image} alt="logo.png" />
+        </Logo>
 
-  return (
-    <Container>
-      <Logo>
-        <img src={image} alt="logo.png" />
-      </Logo>
+        <FormContainer>
+          <h3>Sign-In</h3>
+          <InputContainer>
+            <p>Email</p>
+            <input
+              type="email"
+              placeholder="youremail@example.com"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
+          </InputContainer>
+          <InputContainer>
+            <p>Password</p>
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+          </InputContainer>
 
-      <FormContainer>
-        <h3>Sign-In</h3>
-        <InputContainer>
-          <p>Email</p>
-          <input type="email" placeholder="youremail@example.com" onChange={(e) => setEmail(e.target.value)} value={email} />
-        </InputContainer>
-        <InputContainer>
-          <p>Password</p>
-          <input type="password" placeholder="Password" onChange={(e)=> setPassword(e.target.value)} value={password} />
-        </InputContainer>
-        <LoginButton onClick={login}>login</LoginButton>
-        <InfoText>
-          <p>
-            By continuing you agree to Amazon's <span>Conditions of Use </span>
-            and <span>Privacy Notice</span>
-          </p>
-        </InfoText>
-      </FormContainer>
-      <SignUpButton  onClick={()=> navigate('/signup')}>
-        Create your Amazon Account
-      </SignUpButton>
-    </Container>
-  );
+          <LoginButton onClick={login}>login</LoginButton>
+          <InfoText>
+            <p>
+              By continuing you agree to Amazon's{" "}
+              <span>Conditions of Use </span>
+              and <span>Privacy Notice</span>
+            </p>
+          </InfoText>
+        </FormContainer>
+        <SignUpButton onClick={() => navigate("/signup")}>
+          Create your Amazon Account
+        </SignUpButton>
+      </Container>
+    );
 }
 
 

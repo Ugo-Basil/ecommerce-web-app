@@ -8,6 +8,7 @@ const productRouter = require("./routes/products.js");
 const userRouter = require("./routes/user.js");
 const paymentRouter = require("./routes/payment.js");
 const orderRouter = require("./routes/order.js");
+const getProductRouter = require("./routes/products.js");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -41,7 +42,8 @@ mongoose
   });
 
 app.get('/', (req, res) => res.status(200).send("Home page"));
-app.use("/user", userRouter);
+app.use("/api/allproducts", getProductRouter);
+app.use("/api", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api", paymentRouter);

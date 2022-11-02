@@ -26,6 +26,7 @@ async function signIn(req, res) {
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
             res.status(200).json({ message: 'Sign in successful' });
+            console.log('Sign in successful');
         } else {
             res.status(400).json({ message: 'Invalid credentials' });
         }

@@ -13,7 +13,7 @@ function AddProduct() {
     e.preventDefault();
 
     axios
-      .post("/products/add", { title, imageURL, price, rating })
+      .post("/api/products/add", { title, imageURL, price, rating })
       .then(() => {
         setTitle("");
         setImageURL("");

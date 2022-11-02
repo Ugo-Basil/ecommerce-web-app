@@ -3,6 +3,7 @@ import styled from "styled-components";
 import image from "../../assets/amazon_logo.png";
 import { useNavigate } from "react-router-dom";
 import axios from "../../axios";
+
 const SignUp = () => {
   const navigate = useNavigate();
 
@@ -11,14 +12,20 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
 
 
-  const signup = (e) => {
+async function signup(e) {
     e.preventDefault();
-    axios.post('/user/auth/signup', { email, password, fullName })
-      .then((res) => console.log(res.data.message))
-      .catch((err) => console.error(err))
-    navigate('/login');
-  }
-
+    try {
+      const res = await axios.post('/api/auth/signup', { fullName, email, password });
+      if (!res.data.error) {
+        navigate('/signin');
+    } else if (res.data.error) {
+        console.error(res.data.error);
+      }
+    }
+    catch (err) {
+      console.error(err);
+    }
+}
 
   return (
     <Container>
@@ -63,7 +70,7 @@ const SignUp = () => {
           </p>
         </InfoText>
       </FormContainer>
-      <SignInButton onClick={() => navigate("/login")}>
+      <SignInButton onClick={() => navigate("/signin")}>
         Back to Login
       </SignInButton>
     </Container>
