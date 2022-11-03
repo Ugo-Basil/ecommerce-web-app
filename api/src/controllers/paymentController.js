@@ -6,7 +6,7 @@ async function payment(req, res) {
     console.log('Payment Request Received!!! for this amount', total);
 
     const payment = await stripe.paymentIntents.create({
-        amount: total * 100,
+        amount: total,
         currency: 'usd',
     });
 
